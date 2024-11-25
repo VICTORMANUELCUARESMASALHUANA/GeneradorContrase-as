@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Contraseñas con Longitud</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #password {
+            margin: 20px 0;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            width: 100%;
+            font-size: 18px;
+            background-color: #f8f9fa;
+        }
+        label {
+            margin-right: 10px;
+            font-size: 14px;
+            color: #495057;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .options {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+        #length {
+            width: 60px;
+            padding: 5px;
+            margin-top: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Contraseñas</h1>
+        <input type="text" id="password" readonly>
+        <div class="options">
+            <label><input type="checkbox" id="includeLetters" checked> Letras</label>
+            <label><input type="checkbox" id="includeNumbers" checked> Números</label>
+            <label><input type="checkbox" id="includeSymbols" checked> Símbolos</label>
+        </div>
+        <label for="length">Longitud:</label>
+        <input type="number" id="length" value="12" min="4" max="20">
+        <button onclick="generatePassword()">Generar Contraseña</button>
+    </div>
+    <script>
+        function generatePassword() {
+            const length = parseInt(document.getElementById("length").value);
+            const includeLetters = document.getElementById("includeLetters").checked;
+            const includeNumbers = document.getElementById("includeNumbers").checked;
+            const includeSymbols = document.getElementById("includeSymbols").checked;
+            
+            let charset = "";
+            if (includeLetters) charset += "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (includeNumbers) charset += "0123456789";
+            if (includeSymbols) charset += "!@#$%^&*()_+[]{}|;:',.<>?";
+            
+            if (charset.length === 0) {
+                alert("Debes seleccionar al menos un tipo de carácter.");
+                return;
+            }
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+            document.getElementById("password").value = password;
+        }
+    </script>
+</body>
+</html>
